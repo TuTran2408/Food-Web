@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Cacbuocnau>
+<div class="uk-width-expand@m">
+    <div class="uk-article">
+        <h3>Các Bước Nấu</h3>
+        @foreach (var ingredient in Model)
+        {
+            <div id="step-1" class="uk-grid-small uk-margin-medium-top" data-uk-grid>
+                <div class="uk-width-auto">
+                    <a href="#" class="uk-step-icon" data-uk-icon="icon: check; ratio: 0.8"
+                   data-uk-toggle="target: #step-1; cls: uk-step-active"></a>
+                </div>
+                <div class="uk-width-expand">
+                    <h5 class="uk-step-title uk-text-500 uk-text-uppercase uk-text-primary" data-uk-leader="fill:—">@ingredient.BuocThucHien</h5>
+                    <div class="uk-step-content">
+                        @ingredient.HuongDan
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

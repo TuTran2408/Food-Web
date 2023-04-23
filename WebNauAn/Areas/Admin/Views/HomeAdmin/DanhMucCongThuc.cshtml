@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebNauAn.Models.Congthuc>
+
+@{
+    ViewData["Title"] = "DanhMucCongThuc";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>DanhMucCongThuc</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenCongThuc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGianChuanBi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TongThoiGianNau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhucVu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TacGia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnhChiTiet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenCongThuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGianChuanBi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongThoiGianNau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhucVu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TacGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnhChiTiet)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaCongThuc">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaCongThuc">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaCongThuc">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

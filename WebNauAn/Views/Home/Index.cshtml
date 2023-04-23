@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutWebNauAn.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Congthuc>
+
+@foreach (var item in Model)
+{
+    <div>
+        <div class="uk-card">
+            <div class="uk-card-media-top uk-inline uk-light">
+                <img class="uk-border-rounded-medium" src="@Url.Content("../Images_NAUAN/"+item.Anh)" alt="Course Title">
+                <div class="uk-position-cover uk-card-overlay uk-border-rounded-medium"></div>
+                <div class="uk-position-xsmall uk-position-top-right">
+                    <a href="#" class="uk-icon-button uk-like uk-position-z-index uk-position-relative uk-icon" data-uk-icon="heart"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="heart"><path fill="none" stroke="#000" stroke-width="1.03" d="M10,4 C10,4 8.1,2 5.74,2 C3.38,2 1,3.55 1,6.73 C1,8.84 2.67,10.44 2.67,10.44 L10,18 L17.33,10.44 C17.33,10.44 19,8.84 19,6.73 C19,3.55 16.62,2 14.26,2 C11.9,2 10,4 10,4 L10,4 Z"></path></svg></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="uk-card-title uk-text-500 uk-margin-small-bottom uk-margin-top">@item.TenCongThuc</h3>
+                <div class="uk-text-xsmall uk-text-muted uk-grid" data-uk-grid="">
+                    <div class="uk-width-auto uk-flex uk-flex-middle uk-first-column">
+                        <span class="uk-rating-filled uk-icon" data-uk-icon="icon: star; ratio: 0.7"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="star"><polygon fill="none" stroke="#000" stroke-width="1.01" points="10 2 12.63 7.27 18.5 8.12 14.25 12.22 15.25 18 10 15.27 4.75 18 5.75 12.22 1.5 8.12 7.37 7.27"></polygon></svg></span>
+                        <span class="uk-margin-xsmall-left">5.0</span>
+                        <span>(73)</span>
+                    </div>
+                    <div class="uk-width-expand uk-text-right">@item.TacGia</div>
+                </div>
+            </div>
+            <a href="@Url.Action("ChiTietCongThuc", "Home", new { macongthuc = @item.MaCongThuc })" class="uk-position-cover"></a>
+        </div>
+    </div>
+}
+<div class="pagination justify-content-center w-100">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new{page = page}), new
+    X.PagedList.Web.Common.PagedListRenderOptions(){
+    LiElementClasses = new List<String> {"page-item"},
+    PageClasses = new List<String> {"page-link"}
+    })
+</div>
+
+
