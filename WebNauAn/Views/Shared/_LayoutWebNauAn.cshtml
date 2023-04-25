@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kocima | Cooking Recipe HTML Template</title>
+    <title>ShoGun | Chia Sẻ Công Thức Nấu Ăn</title>
     <link rel="shortcut icon" type="image/png" href="../../LayoutWebNauAn/html-theme-kocina.vercel.app/img/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Leckerli+One&amp;display=swap" rel="stylesheet">
@@ -25,27 +25,17 @@
         <div class="uk-container">
             <div class="uk-position-z-index" data-uk-navbar>
                 <div class="uk-navbar-left">
-                    <a class="uk-navbar-item uk-logo" href="index-2.html">Kocina</a>
+                    <a class="uk-navbar-item uk-logo" href="index-2.html">Shogun</a>
                     <ul class="uk-navbar-nav uk-visible@m uk-margin-large-left">
-                        <li class="uk-active"><a asp-action="Index">Home</a></li>
+                        <li class="uk-active"><a asp-action="Index">Trang Chủ</a></li>
                         
                     </ul>
                 </div>
                 <div class="uk-navbar-right">
-                    <div>
-                        <a class="uk-navbar-toggle" data-uk-search-icon href="#"></a>
-                        <div class="uk-drop uk-background-default" data-uk-drop="mode: click; pos: left-center; offset: 0">
-                            <form class="uk-search uk-search-navbar uk-width-1-1">
-                                <input class="uk-search-input uk-text-demi-bold" type="search" placeholder="Search..." autofocus>
-                            </form>
-                        </div>
-                    </div>
+                 
                     <ul class="uk-navbar-nav uk-visible@m">
-                        <li><a href="sign-in.html">Sign In</a></li>
+                        <li><a href="@Url.Action("Login","Access")">Đăng Nhập</a></li>
                     </ul>
-                    <div class="uk-navbar-item">
-                        <div><a class="uk-button uk-button-primary" href="sign-up.html">Sign Up</a></div>
-                    </div>
                     <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-toggle>
                         <span data-uk-navbar-toggle-icon></span>
                     </a>
@@ -62,13 +52,13 @@
             <div class="uk-position-relative" data-uk-grid>
                 <div class="uk-width-1-2@m uk-flex uk-flex-middle">
                     <div class="uk-padding-large uk-padding-remove-right">
-                        <h1 class="uk-heading-small uk-margin-remove-top">Choose from thousands of recipes</h1>
+                        <h1 class="uk-heading-small uk-margin-remove-top">Bạn có phải là người thích nấu ăn?</h1>
                         <p class="uk-text-secondary">
-                            Appropriately integrate technically sound value with scalable infomediaries
-                            negotiate sustainable strategic theme areas
+                            Vậy đích thị đây là nơi dành cho bạn. Với hàng ngàn công thức được tổng hợp từ các chuyên gia âm thực,
+                            bạn sẽ có thể học hỏi và nấu được các món ăn mà mình mong muốn.      
                         </p>
                         <a class="uk-text-secondary uk-text-600 uk-text-small hvr-forward" href="sign-up.html">
-                            Sign up today<span class="uk-margin-small-left" data-uk-icon="arrow-right"></span>
+                            Hãy cùng trải nghiệm nhé!<span class="uk-margin-small-left" data-uk-icon="arrow-right"></span>
                         </a>
                     </div>
                 </div>
@@ -83,7 +73,7 @@
             <div data-uk-grid>
                 <div class="uk-width-1-4@m sticky-container">
                     <div data-uk-sticky="offset: 100; bottom: true; media: @@m;">
-                        <h2>Recipes</h2>
+                        <h2>Công Thức</h2>
                         <ul class="uk-nav-default uk-nav-parent-icon uk-nav-filter uk-margin-medium-top" data-uk-nav>
                             @await Component.InvokeAsync("LoaiMonAn")
                             
@@ -114,7 +104,7 @@
         <div class="uk-background-primary uk-border-rounded-large uk-light">
             <div class="uk-width-3-4@m uk-margin-auto uk-padding-large">
                 <div class="uk-text-center">
-                    <h2 class="uk-h2 uk-margin-remove">Be the first to know about the latest deals, receive new trending recipes &amp; more!</h2>
+                    <h2 class="uk-h2 uk-margin-remove">Đăng kí ngay để nhận thông tin về công thức mới nhất!</h2>
                 </div>
                 <div class="uk-margin-medium-top">
                     <div data-uk-scrollspy="cls: uk-animation-slide-bottom; repeat: true">
@@ -138,7 +128,7 @@
         <div class="uk-container uk-text-secondary uk-text-500">
             <div class="uk-child-width-1-2@s" data-uk-grid>
                 <div>
-                    <a href="#" class="uk-logo">Kocina</a>
+                    <a href="#" class="uk-logo">Shogun</a>
                 </div>
                 <div class="uk-flex uk-flex-middle uk-flex-right@s">
                     <div data-uk-grid class="uk-child-width-auto uk-grid-small">
@@ -185,7 +175,7 @@
                 </div>
             </div>
             <div class="uk-margin-medium-top uk-text-small uk-text-muted">
-                <div>Made by <a class="uk-link-muted" href="https://unbound.studio/" target="_blank">Unbound Studio</a> in Guatemala City.</div>
+                <div>Được thực hiện bởi Trần Minh Tú - 201210384 - CNTT4</div>
             </div>
         </div>
     </footer>

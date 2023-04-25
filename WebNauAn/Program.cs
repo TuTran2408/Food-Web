@@ -11,6 +11,7 @@ builder.Services.AddDbContext<WebNauAnContext>(x => x.UseSqlServer(connectionStr
 builder.Services.AddScoped<BuocNauAnRepository>();
 builder.Services.AddScoped<NguyenLieuRepository>();
 builder.Services.AddScoped<LoaiMonAnRepository>();
+builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +28,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

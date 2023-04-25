@@ -1,0 +1,45 @@
+﻿@model WebNauAn.Models.Cacbuocnau
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ThemCacBuocNau";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ThemCacBuocNau</h1>
+
+<h4>Cacbuocnau</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ThemCacBuocNau">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaBuoc" class="control-label"></label>
+                <input asp-for="MaBuoc" class="form-control" />
+                <span asp-validation-for="MaBuoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaCongThuc" class="control-label"></label>
+                <select asp-for="MaCongThuc" class ="form-control" asp-items="ViewBag.MaCongThuc"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BuocThucHien" class="control-label"></label>
+                <input asp-for="BuocThucHien" class="form-control" />
+                <span asp-validation-for="BuocThucHien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HuongDan" class="control-label"></label>
+                <input asp-for="HuongDan" class="form-control" />
+                <span asp-validation-for="HuongDan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

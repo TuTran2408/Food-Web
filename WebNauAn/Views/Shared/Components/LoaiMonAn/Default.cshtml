@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Loaimonan>
 <li class="uk-parent uk-open">
-    <a href="#">Dish Type</a>
+    <a href="#">MENU</a>
     <ul class="uk-nav-sub">
         @foreach(var item in Model){
             <li><a asp-controller="Home" asp-action="CongThucTheoLoaiMonAn" asp-route-maloaimonan="@item.MaLoaiMonAn">@item.TenLoaiMonAn</a></li>

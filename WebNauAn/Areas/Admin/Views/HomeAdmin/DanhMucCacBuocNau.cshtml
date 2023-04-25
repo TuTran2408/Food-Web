@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebNauAn.Models.Cacbuocnau>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "DanhMucCacBuocNau";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>DanhMucCacBuocNau</h1>
+
+<p>
+    <a asp-action="ThemCacBuocNau">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               BuocThucHien
+            </th>
+           @* <th>
+               HuongDan
+            </th>*@
+            <th>
+               MaCongThuc
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuocThucHien)
+            </td>
+           @* <td>
+                @Html.DisplayFor(modelItem => item.HuongDan)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.MaCongThuc)
+            </td>
+            <td>
+                <a asp-action="SuaCacBuocNau" asp-route-mabuoc="@item.MaBuoc">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaBuoc">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaBuoc">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
