@@ -7,7 +7,7 @@ public partial class Loainguyenlieu
 {
     public int? MaLoaiNguyenLieu { get; set; }
 
-    public string? TenLoai { get; set; } 
+    public string? TenLoai { get; set; } = null!;
 
     public string? MoTa { get; set; }
 

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebNauAn.Areas.Admin.Controllers.HomeAdminController.listBuoc>
+
+@{
+    ViewData["Title"] = "CongThucBuocNau";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Các bước</h1>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table" style="width:100%; white-space:nowrap;table-layout:fixed">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Bước
+            </th>
+            <th>
+                Hướng dẫn
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-success";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-success";
+            if (i%2==0)
+            {
+                cls = "table-primary";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.buocThucHien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.huongDan)
+                </td>
+                <td>
+                    <a asp-action="SuaBuocNau" asp-route-mabuocnau="@item.maBuoc">Edit</a> |
+                    <a asp-action="XoaBuocNau" asp-route-mabuocnau="@item.maBuoc">Delete</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -69,21 +69,37 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Quản lý sản phẩm</span>
+                            <span class="menu-title">Quản lý</span>
                             <i class="menu-arrow"></i>
                             <i class="mdi mdi-crosshairs-gps menu-icon"></i>
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="admin"
-                                       asp-asp-controller="HomeAdmin" asp-action="DanhMucSanPham">Danh mục sản phẩm</a>
+                                    <a class="nav-link"
+                                       asp-controller="HomeAdmin" asp-action="danhmuccongthuc">Danh mục công thức</a>
                                 </li>
-                                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       asp-controller="HomeAdmin" asp-action="congthucbuocnau">Cách nấu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       asp-controller="HomeAdmin" asp-action="congthucnguyenlieu">Nguyên liệu cần thiết</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
-                   
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="HomeAdmin" asp-action="danhmucloainguyenlieu">
+                            <span class="menu-title">Quản lý loại nguyên liệu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="HomeAdmin" asp-action="danhmucnguyenlieu">
+                            <span class="menu-title">Quản lý nguyên liệu</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- partial -->
@@ -118,5 +134,6 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

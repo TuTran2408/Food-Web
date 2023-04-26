@@ -14,9 +14,9 @@ namespace WebNauAn.Controllers
             }
             else
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
-           
+
         }
         [HttpPost]
         public IActionResult Login(TaiKhoan user)
@@ -28,7 +28,7 @@ namespace WebNauAn.Controllers
                 {
                     HttpContext.Session.SetString("TenDangNhap", u.TenDangNhap.ToString());
                     return RedirectToAction("Index", "Admin");
-                   
+
                 }
                 else
                 {

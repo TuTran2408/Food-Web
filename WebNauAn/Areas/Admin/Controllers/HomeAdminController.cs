@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Diagnostics;
 using WebNauAn.Models;
 
 namespace WebNauAn.Areas.Admin.Controllers
@@ -34,10 +36,32 @@ namespace WebNauAn.Areas.Admin.Controllers
         [Route("ThemSanPhamMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ThemSanPhamMoi(Congthuc sanpham)
+        public IActionResult ThemSanPhamMoi(Congthuc sanpham, IFormFile anh, IFormFile anhchitiet)
         {
+            Debug.WriteLine("File name: " + anh.FileName); // Debugging line
+            Debug.WriteLine("File name: " + anhchitiet.FileName); // Debugging line
             if (ModelState.IsValid)
             {
+                if (anh != null && anh.Length > 0)
+                {
+                    var fileName = Path.GetFileName(anh.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images_NAUAN", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        anh.CopyTo(fileStream);
+                    }
+                    sanpham.Anh = fileName;
+                }
+                if (anhchitiet != null && anhchitiet.Length > 0)
+                {
+                    var fileName = Path.GetFileName(anhchitiet.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images_NAUAN", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        anhchitiet.CopyTo(fileStream);
+                    }
+                    sanpham.AnhChiTiet = fileName;
+                }
                 db.Congthucs.Add(sanpham);
                 db.SaveChanges();
                 return RedirectToAction("DanhMucCongThuc");
@@ -92,6 +116,255 @@ namespace WebNauAn.Areas.Admin.Controllers
             db.SaveChanges();
             TempData["Message"] = "Công thức đã được xóa";
             return RedirectToAction("DanhMucCongThuc", "HomeAdmin");
+
+        }
+
+        //CAC BUOC NAU
+        [Route("getAllCongthucBuocNau")]
+        [HttpGet]
+        public IActionResult getAllCongthucBuocNau(int macongthuc)
+        {
+            var listBuoc = (from a in db.Cacbuocnaus
+                                  where a.MaCongThuc == macongthuc
+                                  select new listBuoc
+                                  {
+                                      maBuoc = a.MaBuoc,
+                                      buocThucHien = a.BuocThucHien,
+                                      huongDan = a.HuongDan,
+                                      maCongThuc = a.MaCongThuc
+                                  }).OrderBy(x => x.buocThucHien).ToList();
+            ViewBag.MaCongThuc = macongthuc;
+            return View(listBuoc);
+        }
+        public class listBuoc
+        {
+            public int? maBuoc;
+            public int? buocThucHien;
+            public String? huongDan;
+            public int? maCongThuc;
+        }
+        [Route("congthucbuocnau")]
+        public IActionResult CongThucBuocNau()
+        {
+            var lstcongthuc = db.Congthucs.ToList();
+            return View(lstcongthuc);
+        }
+        [Route("ThemBuocNau")]
+        [HttpGet]
+        public IActionResult ThemBuocNau(int macongthuc)
+        {
+            //ViewBag.MaCongThuc = Int32.Parse(macongthuc);
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.Where(x => x.MaCongThuc == macongthuc).ToList(), "MaCongThuc", "TenCongThuc");
+            return View();
+        }
+        [Route("ThemBuocNau")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemBuocNau(Cacbuocnau cacbuocnau)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Cacbuocnaus.Add(cacbuocnau);
+                    db.SaveChanges();
+                    return RedirectToAction("congthucbuocnau");
+                }
+                catch (Exception ex)
+                {
+                    // Log the error message or display it on the page.
+                    ModelState.AddModelError("", "An error occurred while saving the data: " + ex.Message);
+
+                    // Get the inner exception, if any.
+                    Exception innerException = ex.InnerException;
+                    while (innerException != null)
+                    {
+                        // Log or display the inner exception message.
+                        // For example:
+                        ModelState.AddModelError("", "Inner exception message: " + innerException.Message);
+
+                        innerException = innerException.InnerException;
+                    }
+                }
+            }
+
+            // If there are validation errors, return the view with the model to display the errors.
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
+            return View(cacbuocnau);
+        }
+        [Route("SuaBuocNau")]
+        [HttpGet]
+        public IActionResult SuaBuocNau(int mabuocnau)
+        {
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
+            var buocnau = db.Cacbuocnaus.Find(mabuocnau);
+            return View(buocnau);
+        }
+        [Route("SuaBuocNau")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaBuocNau(Cacbuocnau cacbuocnau)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(cacbuocnau).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("getAllCongthucBuocNau");
+                }
+                catch (Exception ex)
+                {
+                    // Log the error message or display it on the page.
+                    ModelState.AddModelError("", "An error occurred while saving the data: " + ex.Message);
+
+                    // Get the inner exception, if any.
+                    Exception innerException = ex.InnerException;
+                    while (innerException != null)
+                    {
+                        // Log or display the inner exception message.
+                        // For example:
+                        ModelState.AddModelError("", "Inner exception message: " + innerException.Message);
+
+                        innerException = innerException.InnerException;
+                    }
+                }
+            }
+
+            // If there are validation errors, return the view with the model to display the errors.
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
+            return View(cacbuocnau);
+        }
+        [Route("XoaBuocNau")]
+        [HttpGet]
+        public IActionResult XoaBuocNau(int mabuocnau)
+        {
+            TempData["Message"] = "";
+            db.Remove(db.Cacbuocnaus.Find(mabuocnau));
+            db.SaveChanges();
+            TempData["Message"] = "Đã được xóa";
+            return RedirectToAction("congthucbuocnau", "HomeAdmin");
+
+        }
+
+        //CONGTHUC-NGUYENLIEU
+        [Route("getAllCongthucNguyenLieu")]
+        [HttpGet]
+        public IActionResult getAllCongthucNguyenLieu(int macongthuc)
+        {
+            {
+
+            };
+            var listNguyenLieu = (from a in db.CongthucNguyenlieus
+                                  join b in db.Nguyenlieus on a.MaNguyenLieu equals b.MaNguyenLieu
+                                  where a.MaCongThuc == macongthuc
+                                  select new listNguyenLieu
+                                  {
+                                      MaNguyenLieu = a.MaNguyenLieu,
+                                      TenNguyenLieu = b.TenNguyenLieu,
+                                      idCongThucNguyenLieu = a.IdCongThucNguyenLieu
+                                  }).ToList();
+            return View(listNguyenLieu);
+        }
+        public class listNguyenLieu
+        {
+            public int? MaNguyenLieu;
+            public String? TenNguyenLieu;
+            public int? idCongThucNguyenLieu;
+        }
+        [Route("congthucnguyenlieu")]
+        public IActionResult CongThucNguyenLieu()
+        {
+            var lstcongthuc = db.Congthucs.ToList();
+            return View(lstcongthuc);
+        }
+        [Route("ThemNguyenLieuCongThuc")]
+        [HttpGet]
+        public IActionResult ThemNguyenLieuCongThuc(int macongthuc)
+        {
+            //ViewBag.MaCongThuc = Int32.Parse(macongthuc);
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.Where(x => x.MaCongThuc == macongthuc).ToList(), "MaCongThuc", "TenCongThuc");
+            ViewBag.MaNguyenLieu = new SelectList(db.Nguyenlieus.ToList(), "MaNguyenLieu", "TenNguyenLieu");
+            return View();
+        }
+        [Route("ThemNguyenLieuCongThuc")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemNguyenLieuCongThuc(CongthucNguyenlieu congthucNguyenlieu)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.CongthucNguyenlieus.Add(congthucNguyenlieu);
+                    db.SaveChanges();
+                    return RedirectToAction("congthucnguyenlieu");
+                }
+                catch (Exception ex)
+                {
+                    // Log the error message or display it on the page.
+                    ModelState.AddModelError("", "An error occurred while saving the data: " + ex.Message);
+                }
+            }
+
+            // If there are validation errors, return the view with the model to display the errors.
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
+            ViewBag.MaNguyenLieu = new SelectList(db.Nguyenlieus.ToList(), "MaNguyenLieu", "TenNguyenLieu");
+            return View(congthucNguyenlieu);
+        }
+        [Route("SuaCongThucNguyenLieu")]
+        [HttpGet]
+        public IActionResult SuaCongThucNguyenLieu(int idcongthucnguyenlieu)
+        {
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
+            ViewBag.MaNguyenLieu = new SelectList(db.Nguyenlieus.ToList(), "MaNguyenLieu", "TenNguyenLieu");
+            var congthucnguyenlieu = db.Cacbuocnaus.Find(idcongthucnguyenlieu);
+            return View(congthucnguyenlieu);
+        }
+        [Route("SuaCongThucNguyenLieu")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaCongThucNguyenLieu(CongthucNguyenlieu congthucnguyenlieu)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(congthucnguyenlieu).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("getAllCongthucBuocNau");
+                }
+                catch (Exception ex)
+                {
+                    // Log the error message or display it on the page.
+                    ModelState.AddModelError("", "An error occurred while saving the data: " + ex.Message);
+
+                    // Get the inner exception, if any.
+                    Exception innerException = ex.InnerException;
+                    while (innerException != null)
+                    {
+                        // Log or display the inner exception message.
+                        // For example:
+                        ModelState.AddModelError("", "Inner exception message: " + innerException.Message);
+
+                        innerException = innerException.InnerException;
+                    }
+                }
+            }
+
+            // If there are validation errors, return the view with the model to display the errors.
+            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
+            return View(congthucnguyenlieu);
+        }
+        [Route("XoaCongThucNguyenLieu")]
+        [HttpGet]
+        public IActionResult XoaCongThucNguyenLieu(int idcongthucnguyenlieu)
+        {
+            TempData["Message"] = "";
+            db.Remove(db.CongthucNguyenlieus.Find(idcongthucnguyenlieu));
+            db.SaveChanges();
+            TempData["Message"] = "Đã được xóa";
+            return RedirectToAction("congthucnguyenlieu", "HomeAdmin");
 
         }
 
@@ -225,86 +498,5 @@ namespace WebNauAn.Areas.Admin.Controllers
             return RedirectToAction("DanhMucLoaiNguyenLieu", "HomeAdmin");
 
         }
-
-        //CONGTHUC_NGUYENLIEU
-        // lỗi k tìm thấy primary key k thêm đc
-        [Route("danhmuccongthucnguyenlieu")]
-        public IActionResult DanhMucCongThucNguyenLieu()
-        {
-            var lst = db.CongthucNguyenlieus.ToList();
-            return View(lst);
-        }
-
-        [Route("ThemCongThucNguyenLieu")]
-        [HttpGet]
-        public IActionResult ThemCongThucNguyenLieu()
-        {
-            return View();
-        }
-        [Route("ThemCongThucNguyenLieu")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ThemCongThucNguyenLieu(CongthucNguyenlieu congthucnguyenlieu)
-        {
-            if (ModelState.IsValid)
-            {
-                db.CongthucNguyenlieus.Add(congthucnguyenlieu);
-                db.SaveChanges();
-                return RedirectToAction("DanhMucCongThucNguyenLieu");
-            }
-            return View(congthucnguyenlieu);
-        }
-
-        //CacBuocNau
-        [Route("danhmuccacbuocnau")]
-        public IActionResult DanhMucCacBuocNau()
-        {
-            var lst = db.Cacbuocnaus.ToList();
-            return View(lst);
-        }
-
-        [Route("ThemCacBuocNau")]
-        [HttpGet]
-        public IActionResult ThemCacBuocNau()
-        {
-            ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
-            return View();
-        }
-        [Route("ThemCongThucNguyenLieu")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ThemCacBuocNau(Cacbuocnau cacbuocnau)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Cacbuocnaus.Add(cacbuocnau);
-                db.SaveChanges();
-                return RedirectToAction("DanhMucCacBuocNau");
-            }
-            return View(cacbuocnau);
-        }
-
-        [Route("SuaCacBuocNau")]
-        [HttpGet]
-        public IActionResult SuaCacBuocNau(int mabuocnau)
-        {
-            var cacbuocnau = db.Cacbuocnaus.Find(mabuocnau);
-            return View(cacbuocnau);
-        }
-        [Route("SuaCacBuocNau")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SuaCacBuocNau(Cacbuocnau cacbuocnau)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(cacbuocnau).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("DanhMucCacBuocNau", "HomeAdmin");
-            }
-            return View(cacbuocnau);
-        }
-
-        //chưa có xóa các bước nấu vì còn khúc mắc :))
     }
 }

@@ -5,11 +5,13 @@ namespace WebNauAn.Models;
 
 public partial class CongthucNguyenlieu
 {
-    public int MaCongThuc { get; set; }
+    public int IdCongThucNguyenLieu { get; set; }
 
-    public int MaNguyenLieu { get; set; }
+    public int? MaCongThuc { get; set; }
 
-    public virtual Congthuc MaCongThucNavigation { get; set; } = null!;
+    public int? MaNguyenLieu { get; set; }
 
-    public virtual Nguyenlieu MaNguyenLieuNavigation { get; set; } = null!;
+    public virtual Congthuc? MaCongThucNavigation { get; set; } = null!;
+
+    public virtual Nguyenlieu? MaNguyenLieuNavigation { get; set; } = null!;
 }

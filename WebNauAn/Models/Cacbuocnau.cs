@@ -13,5 +13,5 @@ public partial class Cacbuocnau
 
     public string? HuongDan { get; set; }
 
-    public virtual Congthuc MaCongThucNavigation { get; set; } = null!;
+    public virtual Congthuc? MaCongThucNavigation { get; set; } = null!;
 }

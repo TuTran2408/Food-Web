@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebNauAn.Models.Congthuc>
+
+@{
+    ViewData["Title"] = "CongThucNguyenLieu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>CongThucNguyenLieu</h1>
+<h4>Hãy chọn một công thức để xem chi tiết</h4>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table" style="width:100%; white-space:nowrap;table-layout:fixed">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                TenCongThuc
+            </th>
+            <th>
+                TacGia
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-success";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-success";
+            if (i%2==0)
+            {
+                cls = "table-primary";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenCongThuc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TacGia)
+                </td>
+                <td>
+                    <a asp-action="ThemBuocNau" asp-route-macongthuc="@item.MaCongThuc">Thêm bước nấu</a> |
+                    <a asp-action="getAllCongthucBuocNau" asp-route-macongthuc="@item.MaCongThuc">Xem bước nấu</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

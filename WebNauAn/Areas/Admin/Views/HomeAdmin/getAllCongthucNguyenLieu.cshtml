@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebNauAn.Areas.Admin.Controllers.HomeAdminController.listNguyenLieu>
+
+@{
+    ViewData["Title"] = "CongThucNguyenLieu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ChiTietNguyenLieu</h1>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table" style="width:100%; white-space:nowrap;table-layout:fixed">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                MaNguyenLieu
+            </th>
+            <th>
+                TenNguyenLieu
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-success";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-success";
+            if (i%2==0)
+            {
+                cls = "table-primary";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNguyenLieu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenNguyenLieu)
+                </td>
+                <td>
+                    <a asp-action="SuaCongThucNguyenLieu" asp-route-idcongthucnguyenlieu="@item.idCongThucNguyenLieu">Edit</a> |
+                    <a asp-action="XoaCongThucNguyenLieu" asp-route-idcongthucnguyenlieu="@item.idCongThucNguyenLieu">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

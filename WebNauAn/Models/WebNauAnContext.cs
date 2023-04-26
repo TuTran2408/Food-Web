@@ -33,7 +33,7 @@ public partial class WebNauAnContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-TBNEGGC9\\SQLEXPRESS;Initial Catalog=Web_Nau_An;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        => optionsBuilder.UseSqlServer("Data Source=TVHUNG-LATITUDE\\SQLEXPRESS;Initial Catalog=Web_Nau_An;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -84,16 +84,20 @@ public partial class WebNauAnContext : DbContext
 
         modelBuilder.Entity<CongthucNguyenlieu>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("CONGTHUC_NGUYENLIEU");
+            entity.HasKey(e => e.IdCongThucNguyenLieu);
 
-            entity.HasOne(d => d.MaCongThucNavigation).WithMany()
+            entity.ToTable("CONGTHUC_NGUYENLIEU");
+
+            entity.Property(e => e.IdCongThucNguyenLieu)
+                .ValueGeneratedNever()
+                .HasColumnName("ID_CongThuc_NguyenLieu");
+
+            entity.HasOne(d => d.MaCongThucNavigation).WithMany(p => p.CongthucNguyenlieus)
                 .HasForeignKey(d => d.MaCongThuc)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CONGTHUC_NGUYENLIEU_CONGTHUC");
 
-            entity.HasOne(d => d.MaNguyenLieuNavigation).WithMany()
+            entity.HasOne(d => d.MaNguyenLieuNavigation).WithMany(p => p.CongthucNguyenlieus)
                 .HasForeignKey(d => d.MaNguyenLieu)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CONGTHUC_NGUYENLIEU_NGUYENLIEU");

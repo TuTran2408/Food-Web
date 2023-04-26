@@ -1,17 +1,17 @@
 ﻿@model WebNauAn.Models.Cacbuocnau
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "SuaCacBuocNau";
+    ViewData["Title"] = "SuaBuocNau";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>SuaCacBuocNau</h1>
+<h1>SuaBuocNau</h1>
 
 <h4>Cacbuocnau</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SuaCacBuocNau">
+        <form asp-action="SuaBuocNau" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MaBuoc" />
             <div class="form-group">
@@ -40,3 +40,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

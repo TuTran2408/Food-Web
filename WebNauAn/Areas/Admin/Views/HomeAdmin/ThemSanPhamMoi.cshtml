@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ThemSanPhamMoi">
+        <form asp-action="ThemSanPhamMoi" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MaCongThuc" class="control-label"></label>
@@ -49,14 +49,12 @@
                 <span asp-validation-for="TacGia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Anh" class="control-label"></label>
-                <input asp-for="Anh" class="form-control" />
-                <span asp-validation-for="Anh" class="text-danger"></span>
+                <label>Anh:</label>
+                <input type="file" name="anh" id="anh" class="form-control">
             </div>
             <div class="form-group">
-                <label asp-for="AnhChiTiet" class="control-label"></label>
-                <input asp-for="AnhChiTiet" class="form-control" />
-                <span asp-validation-for="AnhChiTiet" class="text-danger"></span>
+                <label >AnhChiTiet:</label>
+                <input type="file" name="anhchitiet" id="anhchitiet" class="form-control">
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
