@@ -23,7 +23,7 @@ public partial class Congthuc
 
     public string? AnhChiTiet { get; set; }
 
-    public virtual ICollection<Cacbuocnau>? Cacbuocnaus { get; set; } = new List<Cacbuocnau>();
+    public virtual ICollection<Cacbuocnau> Cacbuocnaus { get; set; } = new List<Cacbuocnau>();
 
-    public virtual ICollection<CongthucNguyenlieu>? CongthucNguyenlieus { get; set; } = new List<CongthucNguyenlieu>();
+    public virtual ICollection<CongthucNguyenlieu> CongthucNguyenlieus { get; set; } = new List<CongthucNguyenlieu>();
 }

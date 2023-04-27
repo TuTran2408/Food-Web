@@ -15,7 +15,7 @@ public partial class Nguyenlieu
 
     public string? DonVi { get; set; }
 
-    public virtual ICollection<CongthucNguyenlieu>? CongthucNguyenlieus { get; set; } = new List<CongthucNguyenlieu>();
+    public virtual ICollection<CongthucNguyenlieu> CongthucNguyenlieus { get; set; } = new List<CongthucNguyenlieu>();
 
     public virtual Loainguyenlieu? MaLoaiNguyenLieuNavigation { get; set; } = null!;
 }

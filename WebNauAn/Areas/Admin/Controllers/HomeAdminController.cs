@@ -318,7 +318,7 @@ namespace WebNauAn.Areas.Admin.Controllers
         {
             ViewBag.MaCongThuc = new SelectList(db.Congthucs.ToList(), "MaCongThuc", "TenCongThuc");
             ViewBag.MaNguyenLieu = new SelectList(db.Nguyenlieus.ToList(), "MaNguyenLieu", "TenNguyenLieu");
-            var congthucnguyenlieu = db.Cacbuocnaus.Find(idcongthucnguyenlieu);
+            var congthucnguyenlieu = db.CongthucNguyenlieus.Find(idcongthucnguyenlieu);
             return View(congthucnguyenlieu);
         }
         [Route("SuaCongThucNguyenLieu")]

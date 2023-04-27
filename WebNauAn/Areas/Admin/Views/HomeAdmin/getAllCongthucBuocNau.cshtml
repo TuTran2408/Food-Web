@@ -9,7 +9,7 @@
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<table class="table" style="width:100%; white-space:nowrap;table-layout:fixed">
+<table class="table" style="width:100%">
     <thead>
         <tr class="table-warning">
             <th>
@@ -35,13 +35,13 @@
                 cls = "table-primary";
             }
             <tr class="@cls">
-                <td>
+                <td style="width:50px; text-align:center">
                     @Html.DisplayFor(modelItem => item.buocThucHien)
                 </td>
-                <td>
+                <td style="white-space:initial">
                     @Html.DisplayFor(modelItem => item.huongDan)
                 </td>
-                <td>
+                <td style="width:100px; text-align:center">
                     <a asp-action="SuaBuocNau" asp-route-mabuocnau="@item.maBuoc">Edit</a> |
                     <a asp-action="XoaBuocNau" asp-route-mabuocnau="@item.maBuoc">Delete</a> 
                 </td>
