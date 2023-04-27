@@ -83,9 +83,9 @@
                 <div class="uk-width-expand@m">
                     <div data-uk-grid>
                         <div class="uk-width-expand@m">
-                            <form class="uk-search uk-search-default uk-width-1-1">
+                            <form class="uk-search uk-search-default uk-width-1-1" method="get" action="@Url.Action("searchFood", "Home")">
                                 <span data-uk-search-icon></span>
-                                <input class="uk-search-input uk-text-small uk-border-rounded uk-form-large" type="search" placeholder="Search for recipes...">
+                                <input name="searchText" class="uk-search-input uk-text-small uk-border-rounded uk-form-large" type="search" placeholder="Search for recipes...">
                             </form>
                         </div>
                             

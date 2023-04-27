@@ -26,6 +26,11 @@ namespace WebNauAn.Controllers
                 return View(lst);
             
         }
+        public IActionResult searchFood(String searchText) 
+        {
+            var listSearchFood = db.Congthucs.Where(x => x.TenCongThuc.Contains(searchText)).ToList();
+            return View(listSearchFood); 
+        }
         public IActionResult ChiTietCongThuc(int macongthuc)
         {
             ViewBag.macongthuc = macongthuc;
